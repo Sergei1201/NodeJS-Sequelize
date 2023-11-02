@@ -11,7 +11,7 @@ const { error } = require('console')
 
 // Testing connection to MySQL
 dbConn.authenticate()
-    .then(() => console.log(`The connection has been established successfully`))
+    .then(() => console.log(`The connection to MySQL has been established successfully`))
     .catch((error) => console.error(`Connection error: ${error}`))
  
 
@@ -21,6 +21,8 @@ const app = express()
 app.get('/', (req, res) => {
     res.send('Index page')
 })
+
+app.use('/gigs', require('./routes/gigs'))
 
 const PORT = process.env.PORT || 5000
 
