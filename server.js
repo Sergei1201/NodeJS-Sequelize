@@ -1,30 +1,34 @@
 const express = require('express')
-const exphbs = require('express-handlebars')
-const bodyParser = require('body-parser')
 const path = require('path')
+const exphbs = require('express-handlebars')
+const Handlebars = require('handlebars')
+const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access')
 require('dotenv').config()
-const dbConn = require('./config')
-
-
-const { error } = require('console')
-
-
-// Testing connection to MySQL
-dbConn.authenticate()
-    .then(() => console.log(`The connection to MySQL has been established successfully`))
-    .catch((error) => console.error(`Connection error: ${error}`))
- 
-
+const db = require('./config')
 const app = express()
+
+// Handlebars middleware
+app.engine('hbs', exphbs.engine({extname: '.hbs', defaultLayout: 'main',  handlebars: allowInsecurePrototypeAccess(Handlebars)}))
+app.set('view engine', 'hbs')
+//app.set('views', './views')
+
+// Test connection to MySQL 
+db.authenticate()
+    .then(() => console.log(`Connection to the database has been successfully established`))
+    .catch(error => console.error(error))
+
+
+// Static folder
+app.use(express.static(path.join(__dirname, 'public')))
 
 // Routes
 app.get('/', (req, res) => {
-    res.send('Index page')
+    res.send('INDEX PAGE')
 })
 
 app.use('/gigs', require('./routes/gigs'))
 
 const PORT = process.env.PORT || 5000
 
-app.listen(PORT, () => console.log(`Server is running on port ${PORT}`))
 
+app.listen(PORT, () => console.log(`Server is running on port ${PORT}`)) 

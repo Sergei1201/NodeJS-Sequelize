@@ -1,7 +1,7 @@
-const Sequelize = require('sequelize')
+const {Sequelize} = require('sequelize')
 
-// DB stuff
-const db = {
+// DB Config
+const dbConfig = {
     HOST: 'localhost',
     USER: 'root',
     PASSWORD: '12345',
@@ -14,17 +14,18 @@ const db = {
         idle: 10000
     }
 }
-// MySQL connection
-const dbConn = new Sequelize(db.DB, db.USER, db.PASSWORD, {
-    host: db.HOST,
-    dialect: db.dialect,
-    operationAliases: false,
+
+// Create a new instance of sequelize to connect to MySQL
+const db = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
+    host: dbConfig.HOST,
+    dialect: dbConfig.dialect,
+    operationsAliases: false,
     pool: {
-        max: db.pool.max,
-        min: db.pool.min,
-        acquire: db.pool.acquire,
-        idle: db.pool.idle 
+        max: dbConfig.pool.max,
+        min: dbConfig.pool.min,
+        acquire: dbConfig.pool.acquire,
+        idle: dbConfig.pool.idle
     }
 })
 
-module.exports = dbConn
+module.exports = db

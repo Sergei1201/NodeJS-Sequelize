@@ -1,8 +1,8 @@
-const {DataTypes} = require('sequelize')
-const dbConn = require('../config')
+const {DataTypes, Sequelize} = require('sequelize')
+const db = require('../config')
 
 // Gig Model
-const Gig = dbConn.define('gig', {
+const Gig = db.define('gig', {
     title: {
         type: DataTypes.STRING
     },
@@ -17,10 +17,14 @@ const Gig = dbConn.define('gig', {
     },
     contact_email: {
         type: DataTypes.STRING
-    },
-},
-{   // Add a table name so that sequelize does not append 's' prefix its name automatically
+       }
+}, 
+    
+{  
+    // Add a table name so that sequelize does not add 's' prefix to its name automatically to avoid name collisions 
     tableName: 'gig'
-})
+}
+)
 
 module.exports = Gig
+
