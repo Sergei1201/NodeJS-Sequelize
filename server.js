@@ -1,4 +1,5 @@
 const express = require('express')
+const bodyParser = require('body-parser')
 const path = require('path')
 const exphbs = require('express-handlebars')
 const Handlebars = require('handlebars')
@@ -10,7 +11,10 @@ const app = express()
 // Handlebars middleware
 app.engine('hbs', exphbs.engine({extname: '.hbs', defaultLayout: 'main',  handlebars: allowInsecurePrototypeAccess(Handlebars)}))
 app.set('view engine', 'hbs')
-//app.set('views', './views')
+
+// Body parser (parsing urlencoded & json)
+app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.json())
 
 // Test connection to MySQL 
 db.authenticate()
@@ -23,7 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 // Routes
 app.get('/', (req, res) => {
-    res.send('INDEX PAGE')
+    res.render('index', {layout: 'landing'})
 })
 
 app.use('/gigs', require('./routes/gigs'))

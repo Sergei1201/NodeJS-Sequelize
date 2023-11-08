@@ -1,0 +1,39 @@
+<section id="add" class="container">
+<div class="form-wrap">
+    <h1>Add A Gig</h1>
+    <p>Your contact email will be shared with registered users</p>
+
+    {{#each errors}}
+    <div class="error">
+        <p>{{text}}</p>
+    </div>
+    {{/each}}
+    <form action="/gigs/add" method="POST">
+        <div class="input-group">
+            <label for="title">Gig Title</label>
+            <input type="text" name="title" id="title" class="input-box" placeholder="web application with JavaScript" maxlength="100" value={{title}}>
+        </div>
+         <div class="input-group">
+            <label for="technologies">Technologies Needed</label>
+            <input type="text" name="technologies" id="technologies" class="input-box" placeholder="javascript, php, react, mysql, mongo" maxlength="100" value={{technologies}}>
+        </div>
+        <div class="input-group">
+            <label for="budget">Budget (leave blank for unknown)</label>
+            <input type="text" name="budget" id="budget" class="input-box" placeholder="1000 2000 3000" value={{budget}}>
+        </div>
+        <div class="input-group">
+            <label for="description">Gig Description</label>
+            <textarea name="description" id="description" class="input-box" placeholder="Taking part in building a whole bunch of new projects using React, NodeJS, and a little bit of PHP" rows="10">{{description}}</textarea> 
+        </div>
+        <div class="input-group">
+            <label for="email">Contact Email</label>
+            <input type="email" name="contact_email" id="contactemail" class="input-box" placeholder="Enter an email" value={{contact_email}}>
+        </div>
+        <input type="submit" value="Add Gig" class="btn btn-reverse">
+    </form>
+</div>
+
+
+
+
+</section>
